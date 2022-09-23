@@ -5,6 +5,7 @@ public class Card {
 
     private SymbolType symbol;
     private int number;
+    private boolean placedFaceUp = false;
 
     public Card(SymbolType symbol, int number){
         if(1<= number && number <= 13){
@@ -14,6 +15,18 @@ public class Card {
             this.symbol = symbol;
             this.number = 1;
         }
+    }
+
+    public void placeFaceUp(){
+        placedFaceUp = true;
+    }
+
+    public void placeFaceDown(){
+        placedFaceUp = false;
+    }
+
+    public boolean isPlacedFaceUp(){
+        return placedFaceUp;
     }
 
     public String toString(){
