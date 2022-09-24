@@ -97,10 +97,14 @@ public class Field {
         System.out.println();
     }
 
+    public void placeFaceDown(Position position){
+        int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + position.getColumn();
+    }
+
     /*
      * "a1", "4B"などの表に対応する文字列を数字に変換します。
      */
-    public static Optional<String> convertIntoCoorfinate(String input){
+    public static Optional<Position> convertIntoCoorfinate(String input){
         final int LINE_MAX = NUMBER_OF_CARDS / NUMBER_DISPLAY_IN_LINE + 1;
         final int COLUMN_MAX = NUMBER_DISPLAY_IN_LINE;
 
@@ -134,6 +138,7 @@ public class Field {
         
         int columnNumber = columnAlphabet - 0x0041 + 1;
 
-        return Optional.ofNullable(columnNumber + "," + lineDigit);
+        // return Optional.ofNullable(columnNumber + "," + lineDigit);
+        return Optional.ofNullable(new Position(lineDigit, columnNumber));
     }
 }

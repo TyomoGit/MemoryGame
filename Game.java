@@ -12,6 +12,6 @@ public class Game {
 
         System.out.println();
         field.show();
-        System.out.println(Field.convertIntoCoorfinate(args[0]).orElse("null"));
+        System.out.println(Field.convertIntoCoorfinate(args[0]).orElse(new Position(0, 0)));
     }
 }
