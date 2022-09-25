@@ -30,7 +30,13 @@ public class Card {
     }
 
     public String toString(){
-        return "[" + symbol.toString() + (number >=10 ? "" : " ") + String.valueOf(number) + "]";
+        String ret = "";
+        if(this.placedFaceUp){
+            ret = "[" + symbol.toString() + (number >=10 ? "" : " ") + String.valueOf(number) + "]";
+        }else{
+            ret = "[" + "■■■" + "]";
+        }
+        return ret;
     }
 
     public SymbolType getSymbol(){

@@ -2,9 +2,9 @@ import java.util.Optional;
 import java.util.Random;
 
 public class Field {
-    private static final int NUMBER_OF_CARDS = 52;
-    private static final int NUMBER_OF_SYMBOLS = 4;
-    private static final int NUMBER_DISPLAY_IN_LINE = 9;
+    public static final int NUMBER_OF_CARDS = 52;
+    public static final int NUMBER_OF_SYMBOLS = 4;
+    public static final int NUMBER_DISPLAY_IN_LINE = 9;
     private Card[] field;
 
     public Field(){
@@ -68,7 +68,7 @@ public class Field {
             headerChar++;
 
         }
-        System.out.println();
+        System.out.println("  ");
 
         for (int i = 0; i < NUMBER_DISPLAY_IN_LINE; i++) {
             if(i == 0){
@@ -94,11 +94,21 @@ public class Field {
                 System.out.print(columnNumber + "|");
             }
         }
-        System.out.println();
+        System.out.println("     ");
     }
 
-    public void placeFaceDown(Position position){
-        int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + position.getColumn();
+    public void placeFaceUp(Position position){
+        int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
+        if(index == 46-1 || index == 54-1){
+            return;
+        }else if(index > 46-1){
+            index--;
+        }
+        if(index > field.length - 1){
+            return;
+        }
+        Card card = field[index];
+        card.placeFaceUp();
     }
 
     /*
@@ -129,7 +139,6 @@ public class Field {
             columnAlphabet -= 0x0020;
         }
         if(columnAlphabet < 0x0041 || 0x005A < columnAlphabet){
-            System.out.printf("line: %c, col: %c\n", lineDigit, columnAlphabet);
             return Optional.empty();
         }
         if((0x0041 + COLUMN_MAX) < columnAlphabet){
@@ -139,6 +148,6 @@ public class Field {
         int columnNumber = columnAlphabet - 0x0041 + 1;
 
         // return Optional.ofNullable(columnNumber + "," + lineDigit);
-        return Optional.ofNullable(new Position(lineDigit, columnNumber));
+        return Optional.ofNullable(new Position(Integer.parseInt(String.valueOf(lineDigit)), columnNumber));
     }
 }
