@@ -18,7 +18,6 @@ public class Game {
             #   # #   # #      #   # #   # #    # #  #       #
             #    #    # ###### #    #    # ###### #   ##     #
             ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-            .........                                     |||||||||
 
             CUI上で遊べる神経衰弱ゲームです。
 
@@ -71,19 +70,19 @@ public class Game {
         printFirstScreen();
 
         while(true){
-            showScreen(field, "どのカードをめくりますか？:");
+            showScreen(field, "どのカードをめくりますか？");
 
-            System.out.print("✏️: ");
+            System.out.print("🃏: ");
             String input = scanner.nextLine();
             Optional<Position> position = Optional.empty();
 
             if(input.length() == 2){
-                position = Field.convertIntoCoorfinate(input);
+                position = Position.valueOf(input);
             }else{
                 continue;
             }
 
-            System.out.println(position.orElse(new Position(0, 0)));
+            System.out.println("Debug: " + position.orElse(new Position(0, 0)));
             sleep(1000);
             if(!position.isPresent()){
                 continue;

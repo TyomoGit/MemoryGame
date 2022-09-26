@@ -1,5 +1,5 @@
 /**
- * Card
+ * トランプのカードを表すクラスです。
  */
 public class Card {
 
@@ -29,16 +29,6 @@ public class Card {
         return placedFaceUp;
     }
 
-    public String toString(){
-        String ret = "";
-        if(this.placedFaceUp){
-            ret = "[" + symbol.toString() + (number >=10 ? "" : " ") + String.valueOf(number) + "]";
-        }else{
-            ret = "[" + "■■■" + "]";
-        }
-        return ret;
-    }
-
     public SymbolType getSymbol(){
         return symbol;
     }
@@ -53,6 +43,17 @@ public class Card {
 
     public boolean numberEquals(Card card){
         return card != null && this.getNumber() == card.getNumber();
+    }
+
+    @Override
+    public String toString(){
+        String ret = "";
+        if(this.placedFaceUp){
+            ret = "[" + symbol.toString() + (number >=10 ? "" : " ") + String.valueOf(number) + "]";
+        }else{
+            ret = "[" + "■■■" + "]";
+        }
+        return ret;
     }
 
     @Override
