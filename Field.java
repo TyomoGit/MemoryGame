@@ -58,43 +58,52 @@ public class Field {
     }
 
     public void show(){
+        System.out.println(this);
+    }
+
+    @Override
+    public String toString(){
+        String ret = "";
+
         char headerChar = 'A';
         for (int i = 0; i < NUMBER_DISPLAY_IN_LINE; i++) {
             if(i == 0){
-                System.out.print(" |  " + headerChar);
+                ret += " |  " + headerChar;
             }else{
-                System.out.print("     " + headerChar);
+                ret += "     " + headerChar;
             }
             headerChar++;
 
         }
-        System.out.println("  ");
+        ret += "  " + "\n";
 
         for (int i = 0; i < NUMBER_DISPLAY_IN_LINE; i++) {
             if(i == 0){
-                System.out.print("-+-----");
+                ret += "-+-----";
             }else{
-                System.out.print("------");
+                ret += "------";
             }
         }
-        System.out.println();
+        ret += "\n";
 
         int columnNumber = 1;
         for (int i = 0; i < field.length; i++) {
             if(i == 0){
-                System.out.print(columnNumber + "|");
+                ret += columnNumber + "|";
             }
             if(i == 45){
-                System.out.print("      ");
+                ret += "      ";
             }
-            System.out.print(field[i].toString() + " ");
+            ret += field[i].toString() + " ";
             if((i+1) % NUMBER_DISPLAY_IN_LINE == 0){
                 columnNumber++;
-                System.out.println();
-                System.out.print(columnNumber + "|");
+                ret += "\n";
+                ret += columnNumber + "|";
             }
         }
-        System.out.println("     ");
+        ret += "     ";
+
+        return ret;
     }
 
     public void placeFaceUp(Position position){
