@@ -1,5 +1,7 @@
+import java.util.Objects;
+
 /**
- * トランプのカードを表すクラスです。
+ * トランプのカードを表します。
  */
 public class Card {
 
@@ -73,8 +75,8 @@ public class Card {
         final int prime = 31; //resultには31をかけるのが主流(計算の都合)
         int result = 1;
 
-        result = prime * result + number;
-        result = prime * result + (symbol != null ? symbol.hashCode() : 0);
+        result = prime * result + Integer.valueOf(number).hashCode();
+        result = prime * result + Objects.hashCode(symbol);
 
         return result;
     }

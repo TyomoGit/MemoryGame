@@ -1,6 +1,8 @@
-import java.util.Optional;
 import java.util.Random;
 
+/**
+ * Cardの集合を表します。
+ */
 public class Field {
     public static final int NUMBER_OF_CARDS = 52;
     public static final int NUMBER_OF_SYMBOLS = 4;

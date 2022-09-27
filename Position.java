@@ -1,5 +1,8 @@
 import java.util.Optional;
 
+/**
+ * 位置を表します。
+ */
 public class Position {
     private int line;
     private int column;
@@ -23,6 +26,7 @@ public class Position {
     public static Optional<Position> valueOf(String input){
         final int LINE_MAX = Field.NUMBER_OF_CARDS / Field.NUMBER_DISPLAY_IN_LINE + 1;
         final int COLUMN_MAX = Field.NUMBER_DISPLAY_IN_LINE;
+        final Position[] exceptions = {new Position(6, 1), new Position(6, 9)};
 
         input = input.replaceAll(" ", "");
 
@@ -53,11 +57,36 @@ public class Position {
         
         int columnNumber = columnAlphabet - 0x0041 + 1;
 
-        return Optional.ofNullable(new Position(Integer.parseInt(String.valueOf(lineDigit)), columnNumber));
+        Position result = new Position(Integer.parseInt(String.valueOf(lineDigit)), columnNumber);
+
+        for (Position position : exceptions) {
+            if(result.equals(position)){
+                return Optional.empty();
+            }
+        }
+        return Optional.ofNullable(result);
     }
 
     @Override
     public String toString(){
         return String.format("line: %d, Colunm: %d", line, column);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) return true;
+        if( !(obj instanceof Position)) return false;
+        Position position = (Position)obj;
+        return this.getLine() == position.getLine() && this.getColumn() == position.getColumn();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+
+        result = prime * result + Integer.valueOf(line).hashCode();
+        result = prime * result + Integer.valueOf(column).hashCode();
+        return result;
     }
 }

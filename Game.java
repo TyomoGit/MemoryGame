@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Game {
 
     private Game(){}
+
     /*
      * n行上に戻る方法
      * \033[nA
@@ -19,7 +20,7 @@ public class Game {
             #    #    # ###### #    #    # ###### #   ##     #
             ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
-            CUI上で遊べる神経衰弱ゲームです。
+            神経衰弱ゲームです。
 
             """); //11段
             showTimeProgressBar(3500);
@@ -50,17 +51,10 @@ public class Game {
     }
 
     private static void showScreen(Field field, String message){
-        // System.out.print("\033[11A");
-        // showEmptyScreen();
         System.out.print("\033[H\033[2J");
-        // System.out.print("\033[11A");
         field.show();
         System.out.println();
         System.out.println("\r" + message);
-    }
-
-    private void turnOver(){
-        
     }
 
     public static void main(String[] args) {
@@ -69,8 +63,10 @@ public class Game {
         System.out.println();
         printFirstScreen();
 
+        boolean firstCard = true;
         while(true){
-            showScreen(field, "どのカードをめくりますか？");
+            String message = (firstCard ? "一" : "二") + "枚目のカードをめくってください。";
+            showScreen(field, message);
 
             System.out.print("🃏: ");
             String input = scanner.nextLine();
@@ -88,6 +84,7 @@ public class Game {
                 continue;
             }
             field.placeFaceUp(position.orElse(new Position(1, 1)));
+            firstCard = !firstCard;
         }
     }
 }
