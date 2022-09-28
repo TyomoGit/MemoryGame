@@ -64,7 +64,7 @@ public class Game {
         printFirstScreen();
 
         boolean isFirstCard = true;
-        Optional<Card> firstCard;
+        Optional<Card> firstCard = Optional.empty();
         while(true){
             String message = (isFirstCard ? "一" : "二") + "枚目のカードをめくってください。";
             showScreen(field, message);
@@ -84,11 +84,19 @@ public class Game {
             if(!position.isPresent()){
                 continue;
             }
+            //ここでpositionはnull以外確定
 
             if(isFirstCard){
-                firstCard = field.getCard(position);
+                firstCard = field.getCard(position.get());
+                if(!firstCard.isPresent()) continue;
             }else{
+                Optional<Card> secondCard = field.getCard(position.get());
+                if(!secondCard.isPresent()) continue;
 
+                if(firstCard.get().equals(secondCard.get())){
+                    //当該座標 remove
+                    field.remove(position.get());
+                }
             }
             field.placeFaceUp(position.orElse(new Position(1, 1)));
             isFirstCard = !isFirstCard;

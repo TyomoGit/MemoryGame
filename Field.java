@@ -56,18 +56,36 @@ public class Field {
         return flag;
     }
 
-    public Optional<Card> getCard(Position position){
+    private boolean checkPosition(Position position){
+        if(position == null) return false;
+
         int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
         if(index == 46-1 || index == 54-1){
-            return Optional.empty();
+            return false;
         }else if(index > 46-1){
             index--;
         }
         if(index > field.length - 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    public void remove(Position position){
+        if(!checkPosition(position)) return;
+        int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
+        field[index] = null;
+    }
+
+    public Optional<Card> getCard(Position position){
+        if(checkPosition(position)){
+            int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
+            Card card = field[index];
+            return Optional.ofNullable(card);
+        }else{
             return Optional.empty();
         }
-        Card card = field[index];
-        return Optional.ofNullable(card);
     }
 
     public void placeFaceUp(Position position){
@@ -114,7 +132,11 @@ public class Field {
             if(i == 45){
                 ret += "      ";
             }
-            ret += field[i].toString() + " ";
+            if(field[i] == null){
+                ret += "     " + " ";
+            }else{
+                ret += field[i].toString() + " ";
+            }
             if((i+1) % NUMBER_DISPLAY_IN_LINE == 0){
                 columnNumber++;
                 ret += "\n";
