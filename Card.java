@@ -2,6 +2,7 @@ import java.util.Objects;
 
 /**
  * トランプのカードを表します。
+ * 今のところジョーカーは表せない。
  */
 public class Card {
 
@@ -11,11 +12,15 @@ public class Card {
 
     public Card(SymbolType symbol, int number){
         if(1<= number && number <= 13){
-            this.symbol = symbol;
             this.number = number;
         }else{
-            this.symbol = symbol;
             this.number = 1;
+        }
+
+        if(symbol == null){
+            this.symbol = SymbolType.SPADE;
+        }else{
+            this.symbol = symbol;
         }
     }
 

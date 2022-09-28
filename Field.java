@@ -1,3 +1,4 @@
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -55,12 +56,29 @@ public class Field {
         return flag;
     }
 
-    public Card[] getField(){
-        return field;
+    public Optional<Card> getCard(Position position){
+        int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
+        if(index == 46-1 || index == 54-1){
+            return Optional.empty();
+        }else if(index > 46-1){
+            index--;
+        }
+        if(index > field.length - 1){
+            return Optional.empty();
+        }
+        Card card = field[index];
+        return Optional.ofNullable(card);
+    }
+
+    public void placeFaceUp(Position position){
+        Optional<Card> card = getCard(position);
+        if(card.isPresent()){
+            card.get().placeFaceUp();
+        }
     }
 
     public void show(){
-        System.out.println(this);
+        System.out.println(this.toString());
     }
 
     @Override
@@ -106,19 +124,5 @@ public class Field {
         ret += "     ";
 
         return ret;
-    }
-
-    public void placeFaceUp(Position position){
-        int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
-        if(index == 46-1 || index == 54-1){
-            return;
-        }else if(index > 46-1){
-            index--;
-        }
-        if(index > field.length - 1){
-            return;
-        }
-        Card card = field[index];
-        card.placeFaceUp();
     }
 }

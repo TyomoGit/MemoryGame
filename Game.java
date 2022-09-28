@@ -63,9 +63,10 @@ public class Game {
         System.out.println();
         printFirstScreen();
 
-        boolean firstCard = true;
+        boolean isFirstCard = true;
+        Optional<Card> firstCard;
         while(true){
-            String message = (firstCard ? "一" : "二") + "枚目のカードをめくってください。";
+            String message = (isFirstCard ? "一" : "二") + "枚目のカードをめくってください。";
             showScreen(field, message);
 
             System.out.print("🃏: ");
@@ -78,13 +79,19 @@ public class Game {
                 continue;
             }
 
-            System.out.println("Debug: " + position.orElse(new Position(0, 0)));
+            // System.out.println("Debug: " + position.orElse(new Position(0, 0)));
             sleep(1000);
             if(!position.isPresent()){
                 continue;
             }
+
+            if(isFirstCard){
+                firstCard = field.getCard(position);
+            }else{
+
+            }
             field.placeFaceUp(position.orElse(new Position(1, 1)));
-            firstCard = !firstCard;
+            isFirstCard = !isFirstCard;
         }
     }
 }
