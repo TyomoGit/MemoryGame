@@ -93,9 +93,10 @@ public class Game {
                 Optional<Card> secondCard = field.getCard(position.get());
                 if(!secondCard.isPresent()) continue;
 
-                if(firstCard.get().equals(secondCard.get())){
+                if(firstCard.get().numberEquals(secondCard.get())){
                     //当該座標 remove
-                    field.remove(position.get());
+                    field.remove(field.positionOf(firstCard.get()).get());// 1枚目
+                    field.remove(position.get()); // 2枚目
                 }
             }
             field.placeFaceUp(position.orElse(new Position(1, 1)));

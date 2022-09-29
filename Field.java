@@ -56,6 +56,12 @@ public class Field {
         return flag;
     }
 
+    // debug ONLY!!
+    @Deprecated
+    public Card[] getField(){
+        return field;
+    }
+
     private boolean checkPosition(Position position){
         if(position == null) return false;
 
@@ -70,6 +76,24 @@ public class Field {
         }
 
         return true;
+    }
+
+    public Optional<Position> positionOf(Card card){
+        int index = -1;
+        for (int i = 0; i < field.length; i++) {
+            if(field[i].equals(card)){
+                index = i;
+                break;
+            }
+        }
+        if(index == -1){
+            return Optional.empty();
+        }else{
+            if(index + 1 >= 46) index++; 
+            int line = ((index) / NUMBER_DISPLAY_IN_LINE) + 1;
+            int column = ((index) % NUMBER_DISPLAY_IN_LINE) + 1;
+            return Optional.ofNullable(new Position(line, column));
+        }
     }
 
     public void remove(Position position){

@@ -7,9 +7,9 @@ public class Position {
     private int line;
     private int column;
 
-    public Position(int line, int colunm){
+    public Position(int line, int column){
         this.line = line;
-        this.column = colunm;
+        this.column = column;
     }
 
     public int getLine(){
