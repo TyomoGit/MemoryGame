@@ -76,6 +76,7 @@ public class Game {
 
             if(input.length() == 2){
                 position = Position.valueOf(input);
+                // System.out.println(position.get());
             }else{
                 continue;
             }

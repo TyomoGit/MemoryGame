@@ -90,10 +90,12 @@ public class Field {
     public Optional<Position> positionOf(Card card){
         int index = -1;
         for (int i = 0; i < field.length; i++) {
-            if(field[i].equals(card)){
-                index = i;
-                break;
-            }
+            try {
+                if(field[i].equals(card)){
+                    index = i;
+                    break;
+                }
+            } catch (NullPointerException e) {}
         }
         if(index == -1){
             return Optional.empty();
@@ -108,12 +110,14 @@ public class Field {
     public void remove(Position position){
         if(!checkPosition(position)) return;
         int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
+        if(index >= 46)index--;
         field[index] = null;
     }
 
     public Optional<Card> getCard(Position position){
         if(checkPosition(position)){
             int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
+            if(index >= 46)index--;
             Card card = field[index];
             return Optional.ofNullable(card);
         }else{
