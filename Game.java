@@ -9,7 +9,7 @@ public class Game {
      * n行上に戻る方法
      * \033[nA
      */
-    public static void printFirstScreen(){
+    public static void showTitleScreen(){
         System.out.print("\033[H\033[2J");
         System.out.print("""
             ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -61,12 +61,13 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         Field field = new Field();
         System.out.println();
-        printFirstScreen();
+        showTitleScreen();
 
         boolean isFirstCard = true;
         Optional<Card> firstCard = Optional.empty();
+        int score = 0;
         while(true){
-            String message = (isFirstCard ? "一" : "二") + "枚目のカードをめくってください。";
+            String message = (isFirstCard ? "一" : "二") + "枚目のカードをめくってください。         " + String.format("score: %3d", score);
             showScreen(field, message);
 
             System.out.print("🃏: ");
@@ -79,8 +80,6 @@ public class Game {
                 continue;
             }
 
-            // System.out.println("Debug: " + position.orElse(new Position(0, 0)));
-            sleep(1000);
             if(!position.isPresent()){
                 continue;
             }
@@ -90,17 +89,29 @@ public class Game {
                 firstCard = field.getCard(position.get());
                 if(!firstCard.isPresent()) continue;
             }else{
+                score++;
                 Optional<Card> secondCard = field.getCard(position.get());
                 if(!secondCard.isPresent()) continue;
 
                 if(firstCard.get().numberEquals(secondCard.get())){
-                    //当該座標 remove
                     field.remove(field.positionOf(firstCard.get()).get());// 1枚目
                     field.remove(position.get()); // 2枚目
+                    System.out.println("当たり！");
+                }else{
+                    System.out.println("残念！");
                 }
             }
-            field.placeFaceUp(position.orElse(new Position(1, 1)));
+            if(field.isEmpty()){
+                break;
+            }
+            field.placeFaceUp(position.orElse(new Position(0, 0)));
             isFirstCard = !isFirstCard;
+            sleep(1500);
+
         }
+        System.out.print("\033[H\033[2J");
+        
+        
+        
     }
 }

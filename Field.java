@@ -78,6 +78,15 @@ public class Field {
         return true;
     }
 
+    public boolean isEmpty(){
+        for (int i = 0; i < field.length; i++) {
+            if(field[i] != null){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public Optional<Position> positionOf(Card card){
         int index = -1;
         for (int i = 0; i < field.length; i++) {
