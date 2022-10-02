@@ -13,11 +13,11 @@ public class Game {
         System.out.print("\033[H\033[2J");
         System.out.print("""
             ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-            ##       ## ###### ##       ## ###### ###### ###   ###
-            # #     # # #      # #     # # #    # #    #   ## ##
-            #  #   #  # ###### #  #   #  # #    # ######    ###
-            #   # #   # #      #   # #   # #    # #  #       #
-            #    #    # ###### #    #    # ###### #   ##     #
+            ##       ## ###### ##       ## ###### ###### ###   ### 
+            # #     # # #      # #     # # #    # #    #   ## ##   
+            #  #   #  # ###### #  #   #  # #    # ######    ###    
+            #   # #   # #      #   # #   # #    # #  #       #     
+            #    #    # ###### #    #    # ###### #   ##     #     
             ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
             神経衰弱ゲームです。
@@ -66,7 +66,8 @@ public class Game {
         boolean isFirstCard = true;
         Optional<Card> firstCard = Optional.empty();
         int score = 0;
-        while(true){
+
+        while(!field.isEmpty()){
             String message = (isFirstCard ? "一" : "二") + "枚目のカードをめくってください。         " + String.format("score: %3d", score);
             showScreen(field, message);
 
@@ -76,7 +77,6 @@ public class Game {
 
             if(input.length() == 2){
                 position = Position.valueOf(input);
-                // System.out.println(position.get());
             }else{
                 continue;
             }
@@ -86,6 +86,8 @@ public class Game {
             }
             //ここでpositionはnull以外確定
 
+            field.placeFaceUp(position.orElse(new Position(0, 0)));
+
             if(isFirstCard){
                 firstCard = field.getCard(position.get());
                 if(!firstCard.isPresent()) continue;
@@ -93,19 +95,18 @@ public class Game {
                 score++;
                 Optional<Card> secondCard = field.getCard(position.get());
                 if(!secondCard.isPresent()) continue;
-
+                
                 if(firstCard.get().numberEquals(secondCard.get())){
+                    System.out.println("当たり！");
                     field.remove(field.positionOf(firstCard.get()).get());// 1枚目
                     field.remove(position.get()); // 2枚目
-                    System.out.println("当たり！");
                 }else{
-                    System.out.println("残念！");
+                    showScreen(field, "残念！");
+                    sleep(1000);
+                    field.placeFaceDown(field.positionOf(firstCard.get()).get());
+                    field.placeFaceDown(position.get());
                 }
             }
-            if(field.isEmpty()){
-                break;
-            }
-            field.placeFaceUp(position.orElse(new Position(0, 0)));
             isFirstCard = !isFirstCard;
             sleep(1500);
 

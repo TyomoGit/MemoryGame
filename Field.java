@@ -88,6 +88,7 @@ public class Field {
     }
 
     public Optional<Position> positionOf(Card card){
+        if(card == null)return Optional.empty();
         int index = -1;
         for (int i = 0; i < field.length; i++) {
             try {
@@ -108,6 +109,7 @@ public class Field {
     }
 
     public void remove(Position position){
+        if(position == null)return;
         if(!checkPosition(position)) return;
         int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
         if(index >= 46)index--;
@@ -115,6 +117,7 @@ public class Field {
     }
 
     public Optional<Card> getCard(Position position){
+        if(position == null)return Optional.empty();
         if(checkPosition(position)){
             int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
             if(index >= 46)index--;
@@ -126,9 +129,18 @@ public class Field {
     }
 
     public void placeFaceUp(Position position){
+        if(position == null)return;
         Optional<Card> card = getCard(position);
         if(card.isPresent()){
             card.get().placeFaceUp();
+        }
+    }
+
+    public void placeFaceDown(Position position){
+        if (position == null)return;
+        Optional<Card> card = getCard(position);
+        if(card.isPresent()){
+            card.get().placeFaceDown();
         }
     }
 
