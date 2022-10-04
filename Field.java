@@ -150,7 +150,7 @@ public class Field {
         place(position, false);
     }
 
-    public void place(Position position, boolean faceUp){
+    private void place(Position position, boolean faceUp){
         Optional<Card> card = getCard(position);
         if(card.isPresent()) return;
         if(faceUp){

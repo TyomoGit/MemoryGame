@@ -74,10 +74,12 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == this) return true;
-        if( !(obj instanceof Position)) return false;
-        Position position = (Position)obj;
-        return this.getLine() == position.getLine() && this.getColumn() == position.getColumn();
+        boolean ret = false;
+        if(obj instanceof Position){
+            Position position = (Position)obj;
+            ret = this.getLine() == position.getLine() && this.getColumn() == position.getColumn();
+        }
+        return ret;
     }
 
     @Override

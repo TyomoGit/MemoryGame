@@ -60,14 +60,12 @@ public class Card {
 
     @Override
     public boolean equals(Object object){
-        if(object == this){
-            return true;
+        boolean ret = false;
+        if(object instanceof Card){
+            Card card = (Card) object;
+            ret = card.getSymbol() == this.getSymbol() && card.getNumber() == this.getNumber();
         }
-        if(!(object instanceof Card)){
-            return false;
-        }
-        Card card = (Card) object;
-        return card.getSymbol() == this.getSymbol() && card.getNumber() == this.getNumber();
+        return ret;
     }
 
     @Override
