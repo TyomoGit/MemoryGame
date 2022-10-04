@@ -116,30 +116,46 @@ public class Field {
         field[index] = null;
     }
 
+    // public Optional<Card> getCard(Position position){
+    //     Optional<Card> ret = Optional.empty();
+
+    //     if(position == null)return Optional.empty();
+    //     if(checkPosition(position)){
+    //         int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
+    //         if(index >= 46)index--;
+    //         Card card = field[index];
+    //         return Optional.ofNullable(card);
+    //     }else{
+    //         return Optional.empty();
+    //     }
+    // }
+
     public Optional<Card> getCard(Position position){
-        if(position == null)return Optional.empty();
-        if(checkPosition(position)){
+        Optional<Card> ret = Optional.empty();
+
+        if(position != null && checkPosition(position)){
             int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
             if(index >= 46)index--;
             Card card = field[index];
             return Optional.ofNullable(card);
-        }else{
-            return Optional.empty();
         }
+        return ret;
     }
 
     public void placeFaceUp(Position position){
-        if(position == null)return;
-        Optional<Card> card = getCard(position);
-        if(card.isPresent()){
-            card.get().placeFaceUp();
-        }
+        place(position, true);
     }
 
     public void placeFaceDown(Position position){
-        if (position == null)return;
+        place(position, false);
+    }
+
+    public void place(Position position, boolean faceUp){
         Optional<Card> card = getCard(position);
-        if(card.isPresent()){
+        if(card.isPresent()) return;
+        if(faceUp){
+            card.get().placeFaceUp();
+        }else{
             card.get().placeFaceDown();
         }
     }

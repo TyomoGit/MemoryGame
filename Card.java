@@ -6,20 +6,15 @@ import java.util.Objects;
  */
 public class Card {
 
-    private SymbolType symbol;
-    private int number;
+    private SymbolType symbol = SymbolType.SPADE;
+    private int number = 1;
     private boolean placedFaceUp = false;
 
     public Card(SymbolType symbol, int number){
         if(1<= number && number <= 13){
             this.number = number;
-        }else{
-            this.number = 1;
         }
-
-        if(symbol == null){
-            this.symbol = SymbolType.SPADE;
-        }else{
+        if(symbol != null){
             this.symbol = symbol;
         }
     }
