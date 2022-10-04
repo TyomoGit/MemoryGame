@@ -10,6 +10,11 @@ public class Card {
     private int number = 1;
     private boolean placedFaceUp = false;
 
+    /**
+     * placedFaceUpの初期値はfalse（裏返し）。
+     * @param symbol
+     * @param number
+     */
     public Card(SymbolType symbol, int number){
         if(1<= number && number <= 13){
             this.number = number;
@@ -40,7 +45,7 @@ public class Card {
     }
 
     public boolean symbolEquals(Card card){
-        return card != null && this.getNumber() == card.getNumber();
+        return card != null && this.getSymbol() == card.getSymbol();
     }
 
     public boolean numberEquals(Card card){

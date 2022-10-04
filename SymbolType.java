@@ -7,13 +7,13 @@ public enum SymbolType{
     DIAMOND("\u2666"),
     CLOVER("\u2663");
 
-    String symbol;
-    SymbolType(String symbol){
-        this.symbol = symbol;
+    String symbolString;
+    SymbolType(String symbolString){
+        this.symbolString = symbolString;
     }
 
     @Override
     public String toString(){
-        return symbol;
+        return symbolString;
     }
 }
