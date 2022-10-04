@@ -137,7 +137,7 @@ public class Field {
             int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
             if(index >= 46)index--;
             Card card = field[index];
-            return Optional.ofNullable(card);
+            ret =  Optional.ofNullable(card);
         }
         return ret;
     }
@@ -152,7 +152,7 @@ public class Field {
 
     private void place(Position position, boolean faceUp){
         Optional<Card> card = getCard(position);
-        if(card.isPresent()) return;
+        if(!(card.isPresent())) return;
         if(faceUp){
             card.get().placeFaceUp();
         }else{

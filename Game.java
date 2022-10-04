@@ -26,6 +26,22 @@ public class Game {
             showTimeProgressBar(3500);
     }
 
+    public static void showEndScreen(int score){
+        System.out.print("\033[H\033[2J");
+        System.out.printf("""
+            ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+                    ###### #      ###### ###### ######  ##         
+                    #      #      #      #    # #    #  ##         
+                    #      #      ###### ###### ######  ##         
+                    #      #      #      #    # # #                
+                    ###### ###### ###### #    # #  ###  ##         
+            ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+            ゲームクリア！ score: %3d
+
+            """, score); //11段
+    }
+
     public static void showTimeProgressBar(double millis){
         double width = 1 + Field.NUMBER_DISPLAY_IN_LINE * 6;
         for (int i = 0; i <= width; i++) {
@@ -111,7 +127,7 @@ public class Game {
             sleep(1500);
 
         }
-        System.out.print("\033[H\033[2J");
+        showEndScreen(score);
         scanner.close();
     }
 }
