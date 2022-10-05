@@ -56,9 +56,9 @@ public class Card {
     public String toString(){
         String ret = "";
         if(this.placedFaceUp){
-            ret = "[" + symbol.toString() + (number >=10 ? "" : " ") + String.valueOf(number) + "]";
+            ret = String.format("[%s%s%d]", symbol.toString(), number >=10 ? "" : " ", number);
         }else{
-            ret = "[" + "■■■" + "]";
+            ret = "[■■■]";
         }
         return ret;
     }

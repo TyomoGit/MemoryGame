@@ -44,16 +44,15 @@ public class Field {
     }
 
     private boolean fieldContains(Card card){
-        boolean flag = false;
+        boolean ret = false;
 
         for (int i = 0; i < field.length; i++) {
             if(card.equals(field[i])){
-                flag = true;
+                ret = true;
                 break;
             }
-            
         }
-        return flag;
+        return ret;
     }
 
     // debug ONLY!!
@@ -66,29 +65,34 @@ public class Field {
         if(position == null) return false;
 
         int index = (position.getLine() -1 ) * NUMBER_DISPLAY_IN_LINE + (position.getColumn()-1);
-        if(index == 46-1 || index == 54-1){
-            return false;
+
+        boolean ret = true;
+        if(index > field.length - 1){
+            ret = false;
+        }else if(index == 46-1 || index == 54-1){
+            ret = false;
         }else if(index > 46-1){
             index--;
         }
-        if(index > field.length - 1){
-            return false;
-        }
 
-        return true;
+        return ret;
     }
 
     public boolean isEmpty(){
+        boolean ret = true;
+
         for (int i = 0; i < field.length; i++) {
             if(field[i] != null){
-                return false;
+                ret = false;
+                break;
             }
         }
-        return true;
+
+        return ret;
     }
 
     public Optional<Position> positionOf(Card card){
-        if(card == null)return Optional.empty();
+        if(card == null )return Optional.empty();
         int index = -1;
         for (int i = 0; i < field.length; i++) {
             try {
